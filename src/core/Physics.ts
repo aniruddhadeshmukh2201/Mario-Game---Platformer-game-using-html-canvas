@@ -1,6 +1,4 @@
 import GameObject from "../objects/GameObject";
-import Player from "../objects/Player";
-
 
 
 

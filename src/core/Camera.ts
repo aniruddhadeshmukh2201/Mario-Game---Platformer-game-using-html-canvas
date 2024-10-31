@@ -6,11 +6,30 @@ class Camera {
     private width: number;
     private height: number;
 
+
+    
+
     constructor(x: number, y: number, width: number, height: number) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+    
+    getX() {
+        return this.x;
+    }
+
+    getY() {
+        return this.y;
+    }
+
+    getWidth() {
+        return this.width;
+    }
+
+    getHeight() {
+        return this.height;
     }
 
     // Update camera position based on player movement, if necessary
