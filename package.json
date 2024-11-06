@@ -4,12 +4,17 @@
   "description": "Mario like game using canvas api",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "^5.6.3"
+    "@types/node": "^22.8.5",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
   }
 }

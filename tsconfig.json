@@ -1,19 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES6",                             // Specify ECMAScript target version
-    "module": "ES6",                             // Use ES module syntax
-    "moduleResolution": "node",                  // Use Node's module resolution algorithm
-    "outDir": "./dist",                          // Output directory for compiled files
-    "rootDir": "./src",                          // Root directory of source files
-    "strict": true,                              // Enable all strict type-checking options
-    "esModuleInterop": true,                     // Allow default imports from CommonJS modules
-    "forceConsistentCasingInFileNames": true,    // Ensure imports use consistent casing
-    "skipLibCheck": true                         // Skip type checking of declaration files
+      "target": "es2016",
+      "module": "esnext", // Change to 'esnext' for Vite
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist", // Optional, if you want to output compiled files somewhere
   },
   "include": [
-    "src/**/*"                                   // Include all TypeScript files in the src directory
-  ],
-  "exclude": [
-    "node_modules"                               // Exclude node_modules to avoid redundant checks
+      "src/**/*.ts" // Include all TypeScript files in the src directory
   ]
 }

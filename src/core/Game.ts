@@ -11,7 +11,6 @@ class Game {
   ctx: CanvasRenderingContext2D;
   canvasWidth: number;
   canvasHeight: number;
-  worldWidth: number;
 
   private player: Player;
   private gameObjects: GameObject[] = [];
@@ -25,8 +24,7 @@ class Game {
     this.ctx = this.canvas.getContext("2d")!;
     this.canvasWidth = this.canvas.width;
     this.canvasHeight = this.canvas.height;
-    this.worldWidth = 2000;
-    this.player = new Player(0, 0, 0, 0, 10, 10);
+    this.player = new Player(100, 100, 0, 0, 25, 40);
     this.gameObjects.push(new Mushroom(10, 10, 0, 0, 10, 10, "basic"));
     this.inputHandler = new InputHandler();
     this.renderer = new Renderer(this.ctx);
