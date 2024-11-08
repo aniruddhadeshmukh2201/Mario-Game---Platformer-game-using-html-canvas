@@ -43,20 +43,20 @@ class Game {
 
   public update() {
     this.handleInput();
-    this.physics.applyPhysics([this.player, ...this.gameWorld.getObjects()]);
+    this.physics.applyPhysics([this.player, ...this.gameWorld.getObjects()], this.canvasHeight);
   }
 
   private handleInput() {
     if (
-      this.inputHandler.isKeyPressed("ArrowUp") ||
-      this.inputHandler.isKeyPressed("Space")
+      (this.inputHandler.isKeyPressed("ArrowUp") ||
+      this.inputHandler.isKeyPressed("Space")) && this.player.getOnGround()
     ) {
       this.player.jump();
     }
-    if (this.inputHandler.isKeyPressed("ArrowLeft")) {
+    if (this.inputHandler.isKeyPressed("ArrowLeft") && this.player.getOnGround()) {
       this.player.moveLeft();
     }
-    if (this.inputHandler.isKeyPressed("ArrowRight")) {
+    if (this.inputHandler.isKeyPressed("ArrowRight") && this.player.getOnGround()) {
       this.player.moveRight();
     }
     // Reset keys if needed
@@ -64,10 +64,11 @@ class Game {
   }
 
   render() {
-    const visibleObjects = [this.player, ...this.gameWorld.getObjects()].filter(
-      (obj) => this.isVisible(obj)
-    );
-    this.renderer.drawGameObjects(visibleObjects);
+    // const visibleObjects = [this.player, ...this.gameWorld.getObjects()].filter(
+    //   (obj) => this.isVisible(obj)
+    // );
+    this.renderer.clearCanvas();
+    this.renderer.drawGameObjects([ this.player, ...this.gameWorld.getObjects()]);
   }
 
   handleCollisions() {

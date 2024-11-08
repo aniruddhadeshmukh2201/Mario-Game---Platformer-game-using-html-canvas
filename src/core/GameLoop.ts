@@ -19,6 +19,9 @@ class GameLoop {
 
     this.game.update();
     this.game.render();
+
+    requestAnimationFrame(this.loop.bind(this));
+
   }
 }
 

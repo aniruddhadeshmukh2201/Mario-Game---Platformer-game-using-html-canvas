@@ -2,6 +2,7 @@ import GameObject from "./GameObject";
 
 class Player extends GameObject {
   color: string = "red";
+  private OnGround: boolean = false;
   constructor(
     x: number,
     y: number,
@@ -13,16 +14,25 @@ class Player extends GameObject {
     super(x, y, vx, vy, width, height, false, false);
   }
 
+  setOnGround(onGround: boolean) {
+    this.OnGround = onGround;
+  }
+
+  getOnGround() {
+    return this.OnGround;
+  }
+
   jump() {
-    super.setVy(super.getVy() - 1);
+    this.setOnGround(false);
+    super.setVy( - 5);
   }
 
   moveLeft() {
-    super.setVx(super.getVx() - 1);
+    super.setVx( -2 );
   }
 
   moveRight() {
-    super.setVx(super.getVx() + 1);
+    super.setVx( 2 );
   }
 
   render(ctx: CanvasRenderingContext2D) {
