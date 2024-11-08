@@ -1,10 +1,13 @@
-import Mushroom from "../objects/Mushroom";
+
 import Player from "../objects/Player";
 import Renderer from "../render/Renderer";
 import InputHandler from "../utils/InputHandler";
 import Physics from "./Physics";
 import Camera from "./Camera";
 import GameObject from "../objects/GameObject";
+import GameWorld from "./GameWorld";
+import WorldBuilder from "./WorldBuilder";
+import GameObjectFactory from "../objects/GameObjectFactory";
 
 class Game {
   canvas: HTMLCanvasElement;
@@ -13,7 +16,9 @@ class Game {
   canvasHeight: number;
 
   private player: Player;
-  private gameObjects: GameObject[] = [];
+  private gameObjectFactory: GameObjectFactory;
+  private gameWorld: GameWorld;
+  private worldBuilder: WorldBuilder;
   private inputHandler: InputHandler;
   private renderer: Renderer;
   private physics: Physics;
@@ -25,16 +30,20 @@ class Game {
     this.canvasWidth = this.canvas.width;
     this.canvasHeight = this.canvas.height;
     this.player = new Player(100, 100, 0, 0, 25, 40);
-    this.gameObjects.push(new Mushroom(10, 10, 0, 0, 10, 10, "basic"));
+    this.gameObjectFactory = new GameObjectFactory();
+    this.worldBuilder = new WorldBuilder(this.gameObjectFactory);
+    this.gameWorld = new GameWorld(this.worldBuilder);
+    this.gameWorld.initializeWorld('../config.json');
     this.inputHandler = new InputHandler();
     this.renderer = new Renderer(this.ctx);
     this.physics = new Physics();
     this.camera = new Camera(0, 0, 800, 600);
+    console.log("Game created");
   }
 
   public update() {
     this.handleInput();
-    this.physics.applyPhysics([this.player, ...this.gameObjects]);
+    this.physics.applyPhysics([this.player, ...this.gameWorld.getObjects()]);
   }
 
   private handleInput() {
@@ -55,8 +64,8 @@ class Game {
   }
 
   render() {
-    const visibleObjects = [this.player, ...this.gameObjects].filter((obj) =>
-      this.isVisible(obj)
+    const visibleObjects = [this.player, ...this.gameWorld.getObjects()].filter(
+      (obj) => this.isVisible(obj)
     );
     this.renderer.drawGameObjects(visibleObjects);
   }

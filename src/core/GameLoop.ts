@@ -6,6 +6,7 @@ class GameLoop {
 
   constructor(game: Game) {
     this.game = game;
+    console.log("GameLoop created");
   }
 
   start() {

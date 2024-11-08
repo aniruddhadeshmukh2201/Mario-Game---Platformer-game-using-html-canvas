@@ -1,33 +1,26 @@
 import Collectible from "./Collectible";
-import GameObject from "./GameObject";
 import Mushroom from "./Mushroom";
 import Platform from "./Platform";
 
 class GameObjectFactory {
-    private prototypes = {
-        platform: new GameObject(0, 0, 200, 20),
-        mushroom: new GameObject(0, 0),
-        coin: new GameObject(0, 0, CollectibleType.COIN),
-    };
 
-    createPlatform(x: number, y: number): GameObject {
-        const platform = Object.assign(Object.create(Object.getPrototypeOf(this.prototypes.platform)), this.prototypes.platform);
-        platform.setPosition(x, y);
+    // Factory method for creating a Platform
+    createPlatform(x: number, y: number, width : number, height : number): Platform {
+        const platform = new Platform(x, y, 0, 0, 200, 20); // Passing all 6 required arguments
         return platform;
     }
 
-    createMushroom(x: number, y: number): GameObject {
-        const mushroom = Object.assign(Object.create(Object.getPrototypeOf(this.prototypes.mushroom)), this.prototypes.mushroom);
-        mushroom.setPosition(x, y);
+    // Factory method for creating a Mushroom
+    createMushroom(x: number, y: number, width : number, height : number, type : string ): Mushroom {
+        const mushroom = new Mushroom(x, y, 0, 0, width, height, type); // Passing all 7 required arguments
         return mushroom;
     }
 
-    createCollectible(x: number, y: number, type: string): GameObject {
-        const collectible = Object.assign(Object.create(Object.getPrototypeOf(this.prototypes.coin)), this.prototypes.coin);
-        collectible.setPosition(x, y);
+    // Factory method for creating a Collectible (coin in this case)
+    createCollectible(x: number, y: number, width: number, height : number ): Collectible {
+        const collectible = new Collectible(x, y, 0, 0, width, height); // Collectible constructor with type
         return collectible;
     }
 }
-
 
 export default GameObjectFactory;

@@ -1,4 +1,5 @@
 import GameObject from "../objects/GameObject";
+import GameObjectFactory from "../objects/GameObjectFactory";
 
 
 
@@ -14,12 +15,11 @@ class WorldBuilder {
         });
         config.enemies.forEach((e: any) => {
             if (e.type === "mushroom") {
-                gameObjects.push(this.factory.createMushroom(e.x, e.y));
+                gameObjects.push(this.factory.createMushroom(e.x, e.y, e.width, e.height, e.type));
             }
-            // Additional enemies can be added here
         });
         config.collectibles.forEach((c: any) => {
-            gameObjects.push(this.factory.createCollectible(c.x, c.y, c.type));
+            gameObjects.push(this.factory.createCollectible(c.x, c.y, c.width, c.height));
         });
 
         return gameObjects;

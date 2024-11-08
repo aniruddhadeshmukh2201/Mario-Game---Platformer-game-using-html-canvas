@@ -1,4 +1,5 @@
 import GameObject from "../objects/GameObject";
+import WorldBuilder from "./WorldBuilder";
 
 
 
