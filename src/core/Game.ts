@@ -55,6 +55,7 @@ class Game {
       this.player.jump();
     }
     if (this.inputHandler.isKeyPressed("ArrowLeft") && this.player.getOnGround()) {
+      console.log("----pressed left----");
       this.player.moveLeft();
     }
     if (this.inputHandler.isKeyPressed("ArrowRight") && this.player.getOnGround()) {

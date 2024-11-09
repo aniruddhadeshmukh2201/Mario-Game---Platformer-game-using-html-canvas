@@ -27,6 +27,22 @@ class GameObject {
     this.floating = floating;
   }
 
+  getLeft() {
+    return this.x - this.width / 2;
+  }
+
+  getRight() {
+    return this.x + this.width / 2;
+  }
+
+  getTop() {
+    return this.y - this.height / 2;
+  }
+
+  getBottom() {
+    return this.y + this.height / 2;
+  }
+
   getPassable() {
     return this.passable;
   }
