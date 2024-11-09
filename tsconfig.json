@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-      "target": "es2016",
-      "module": "esnext", // Change to 'esnext' for Vite
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "outDir": "./dist", // Optional, if you want to output compiled files somewhere
+    "target": "es2016",
+    "module": "esnext",
+    "moduleResolution": "node", // Set to 'node' or 'nodenext' for resolveJsonModule
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "outDir": "./dist"
   },
   "include": [
-      "src/**/*.ts" // Include all TypeScript files in the src directory
+    "src/**/*.ts"
   ]
 }

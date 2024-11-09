@@ -28,11 +28,11 @@ class Player extends GameObject {
   }
 
   moveLeft() {
-    super.setVx( -2 );
+    super.setVx( -3 );
   }
 
   moveRight() {
-    super.setVx( 2 );
+    super.setVx( 3 );
   }
 
   render(ctx: CanvasRenderingContext2D) {

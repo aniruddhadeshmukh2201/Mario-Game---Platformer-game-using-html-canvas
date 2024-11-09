@@ -1,15 +1,14 @@
+import Collectible from "../objects/Collectible";
 import GameObject from "../objects/GameObject";
 import GameObjectFactory from "../objects/GameObjectFactory";
-
-
-
+import Mushroom from "../objects/Mushroom";
+import Platform from "../objects/Platform";
 
 class WorldBuilder {
     constructor(private factory: GameObjectFactory) {}
 
     buildWorld(config: any): GameObject[] {
         const gameObjects: GameObject[] = [];
-
         config.platforms.forEach((p: any) => {
             gameObjects.push(this.factory.createPlatform(p.x, p.y, p.width, p.height));
         });

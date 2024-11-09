@@ -8,6 +8,7 @@ import GameObject from "../objects/GameObject";
 import GameWorld from "./GameWorld";
 import WorldBuilder from "./WorldBuilder";
 import GameObjectFactory from "../objects/GameObjectFactory";
+import config from '../assets/config.json';
 
 class Game {
   canvas: HTMLCanvasElement;
@@ -33,7 +34,7 @@ class Game {
     this.gameObjectFactory = new GameObjectFactory();
     this.worldBuilder = new WorldBuilder(this.gameObjectFactory);
     this.gameWorld = new GameWorld(this.worldBuilder);
-    this.gameWorld.initializeWorld('../config.json');
+    this.gameWorld.initializeWorld(config);
     this.inputHandler = new InputHandler();
     this.renderer = new Renderer(this.ctx);
     this.physics = new Physics();
@@ -49,7 +50,7 @@ class Game {
   private handleInput() {
     if (
       (this.inputHandler.isKeyPressed("ArrowUp") ||
-      this.inputHandler.isKeyPressed("Space")) && this.player.getOnGround()
+      this.inputHandler.isKeyPressed("space")) && this.player.getOnGround()
     ) {
       this.player.jump();
     }
@@ -69,10 +70,6 @@ class Game {
     // );
     this.renderer.clearCanvas();
     this.renderer.drawGameObjects([ this.player, ...this.gameWorld.getObjects()]);
-  }
-
-  handleCollisions() {
-    console.log("Collisions handled");
   }
 
   private isVisible(obj: GameObject): boolean {

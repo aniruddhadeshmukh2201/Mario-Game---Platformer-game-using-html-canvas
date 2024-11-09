@@ -6,7 +6,7 @@ class GameObjectFactory {
 
     // Factory method for creating a Platform
     createPlatform(x: number, y: number, width : number, height : number): Platform {
-        const platform = new Platform(x, y, 0, 0, 200, 20); // Passing all 6 required arguments
+        const platform = new Platform(x, y, 0, 0, width, height); // Passing all 6 required arguments
         return platform;
     }
 

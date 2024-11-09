@@ -1,7 +1,7 @@
 import GameObject from "./GameObject";
 
 class Mushroom extends GameObject {
-  type: any;
+  private type: any;
   constructor(
     x: number,
     y: number,
@@ -14,6 +14,15 @@ class Mushroom extends GameObject {
     super(x, y, vx, vy, width, height, true, false);
     this.type = type;
   }
+
+  getType() {
+    return this.type;
+  }
+
+  setType(type: string) {
+    this.type = type;
+  }
+
 
   render(ctx : CanvasRenderingContext2D) {
     // Render mushroom based on its type
