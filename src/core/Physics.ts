@@ -1,6 +1,6 @@
 import GameObject from "../objects/GameObject";
-import Platform from "../objects/Platform";
 import Player from "../objects/Player";
+import Camera from "./Camera";
 
 class Physics {
   private gravity: number = 0.1;
@@ -10,13 +10,16 @@ class Physics {
     console.log("Physics created");
   }
 
-  applyPhysics(gameObjects: GameObject[], canvasHeight: number) {
+  applyPhysics(gameObjects: GameObject[], canvasHeight: number, camera: Camera) {
     gameObjects.forEach((gameObject) => {
       gameObject.setX(gameObject.getX() + gameObject.getVx());
       gameObject.setY(gameObject.getY() + gameObject.getVy());
       this.applyGravity(gameObject, canvasHeight);
       this.applyFriction(gameObject);
     });
+
+    this.enforceCameraBoundary(gameObjects, camera);
+
     this.applyCollisions(gameObjects);
     this.updateGroundStatus(gameObjects);
   }
@@ -45,6 +48,21 @@ class Physics {
       }
     }
   }
+
+  enforceCameraBoundary(gameObjects: GameObject[], camera: Camera) {
+    gameObjects.forEach((gameObject) => {
+      if (gameObject instanceof Player) {
+        const leftBoundary = camera.getX() ;
+        
+        // Prevent player from moving left of the camera boundary
+        if (gameObject.getX() - gameObject.getWidth() / 2 <= leftBoundary) {
+          gameObject.setX(leftBoundary + gameObject.getWidth() / 2);
+          gameObject.setVx(0); // Stop or push right
+        }
+      }
+    });
+  }
+
 
   applyCollisions(gameObjects: GameObject[]) {
     gameObjects.forEach((gameObject) => {
@@ -80,6 +98,8 @@ class Physics {
   resolveCollision(player: Player, otherObject: GameObject) {
     // Basic example: Prevent the player from moving through platforms or walls
     // if(otherObject.getWidth() == 800) console.log("-------resolveCollision----",player.getVy(),  player.getVy() > 0, player.getBottom() >= otherObject.getTop());
+    
+    
     // Vertical collision (e.g., player landing on top of a platform)
     if (player.getVy() >= 0 && player.getBottom() >= otherObject.getTop()) {
       player.setY(otherObject.getTop() - player.getHeight() / 2); // Set player on top of platform
@@ -89,6 +109,8 @@ class Physics {
       player.setY(otherObject.getBottom() + player.getHeight() / 2); // Set player on top of platform
       player.setVy(0); // Stop vertical movement
     }
+
+
     // Horizontal collision (e.g., running into a wall from the side)
     else {
       if (

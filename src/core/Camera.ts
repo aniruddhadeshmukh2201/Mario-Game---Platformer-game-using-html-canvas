@@ -29,10 +29,17 @@ class Camera {
         return this.height;
     }
 
-    // Update camera position based on player movement, if necessary
-    update(target: GameObject) {
-        this.x = target.getX() - this.width / 2; // Center the camera on the player
-        this.y = target.getY() - this.height / 2;
+    update(target: GameObject, canvasWidth: number) {
+        // Only update the camera position if the player moves past the halfway point
+        const halfCanvasWidth = canvasWidth / 2;
+
+        // If the player’s x-coordinate is greater than half the canvas, update camera position
+        if (target.getVx() > 0 && target.getX() > halfCanvasWidth) {
+            this.x = target.getX() - halfCanvasWidth;
+        }
+
+        // Keep the camera at the top of the screen (y = 0) or adjust as necessary
+        this.y = 0; // Modify if vertical scrolling is desired
     }
 }
 

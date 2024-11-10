@@ -107,7 +107,7 @@ class GameObject {
     this.floating = floating;
   }
 
-  render(ctx : CanvasRenderingContext2D) {
+  render(ctx : CanvasRenderingContext2D, renderX: number, renderY: number) {
     // Render object
     
   }

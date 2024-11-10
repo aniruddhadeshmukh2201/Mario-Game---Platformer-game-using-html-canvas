@@ -1,3 +1,4 @@
+import Camera from "../core/Camera";
 import GameObject from "./GameObject";
 
 class Player extends GameObject {
@@ -23,24 +24,26 @@ class Player extends GameObject {
   }
 
   jump() {
-    this.setOnGround(false);
-    super.setVy( - 5);
+    if (this.OnGround) {
+      this.setOnGround(false);
+      super.setVy(-5);
+    }
   }
 
-  moveLeft() {
-    super.setVx( -3 );
+  moveLeft(camera: Camera) {
+    super.setVx(-3);
   }
 
-  moveRight() {
-    super.setVx( 3 );
+  moveRight(camera: Camera) {
+    super.setVx(3);
   }
 
-  render(ctx: CanvasRenderingContext2D) {
+  render(ctx: CanvasRenderingContext2D, renderX: number, renderY: number) {
     // Example logic using a sprite or simple shape
     ctx.fillStyle = this.color;
     ctx.fillRect(
-      this.getX() - this.getWidth() / 2,
-      this.getY() - this.getHeight() / 2,
+      renderX - this.getWidth() / 2,
+      renderY - this.getHeight() / 2,
       this.getWidth(),
       this.getHeight()
     );

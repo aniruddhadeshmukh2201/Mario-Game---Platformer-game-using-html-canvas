@@ -24,7 +24,7 @@ class Mushroom extends GameObject {
   }
 
 
-  render(ctx : CanvasRenderingContext2D) {
+  render(ctx : CanvasRenderingContext2D, renderX: number, renderY: number) {
     // Render mushroom based on its type
   }
 }

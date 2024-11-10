@@ -15,7 +15,6 @@ class Game {
   ctx: CanvasRenderingContext2D;
   canvasWidth: number;
   canvasHeight: number;
-
   private player: Player;
   private gameObjectFactory: GameObjectFactory;
   private gameWorld: GameWorld;
@@ -24,7 +23,7 @@ class Game {
   private renderer: Renderer;
   private physics: Physics;
   private camera: Camera;
-
+  
   constructor() {
     this.canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
     this.ctx = this.canvas.getContext("2d")!;
@@ -38,13 +37,14 @@ class Game {
     this.inputHandler = new InputHandler();
     this.renderer = new Renderer(this.ctx);
     this.physics = new Physics();
-    this.camera = new Camera(0, 0, 800, 600);
+    this.camera = new Camera(0, 0, 800, 400);
     console.log("Game created");
   }
 
   public update() {
     this.handleInput();
-    this.physics.applyPhysics([this.player, ...this.gameWorld.getObjects()], this.canvasHeight);
+    this.physics.applyPhysics([this.player, ...this.gameWorld.getObjects()], this.canvasHeight, this.camera);
+    this.camera.update(this.player, this.canvasWidth);
   }
 
   private handleInput() {
@@ -56,21 +56,28 @@ class Game {
     }
     if (this.inputHandler.isKeyPressed("ArrowLeft") && this.player.getOnGround()) {
       console.log("----pressed left----");
-      this.player.moveLeft();
+      this.player.moveLeft(this.camera);
     }
     if (this.inputHandler.isKeyPressed("ArrowRight") && this.player.getOnGround()) {
-      this.player.moveRight();
+      this.player.moveRight(this.camera);
     }
     // Reset keys if needed
     this.inputHandler.resetKeys();
   }
 
   render() {
-    // const visibleObjects = [this.player, ...this.gameWorld.getObjects()].filter(
-    //   (obj) => this.isVisible(obj)
-    // );
     this.renderer.clearCanvas();
-    this.renderer.drawGameObjects([ this.player, ...this.gameWorld.getObjects()]);
+
+    // Draw objects relative to the camera’s position
+    const visibleObjects = [this.player, ...this.gameWorld.getObjects()].map(obj => {
+      return {
+        gameObject : obj,
+        renderX: obj.getX() - this.camera.getX(),
+        renderY: obj.getY() - this.camera.getY()
+      };
+    });
+
+    this.renderer.drawGameObjects(visibleObjects);
   }
 
   private isVisible(obj: GameObject): boolean {

@@ -13,11 +13,11 @@ class Platform extends GameObject {
     super(x, y, vx, vy, width, height, true, true);
   }
 
-  render(ctx : CanvasRenderingContext2D) {
+  render(ctx : CanvasRenderingContext2D, renderX: number, renderY: number) {
     ctx.fillStyle = this.color;
     ctx.fillRect(
-      this.getX() - this.getWidth() / 2,
-      this.getY() - this.getHeight() / 2,
+      renderX - this.getWidth() / 2,
+      renderY - this.getHeight() / 2,
       this.getWidth(),
       this.getHeight()
     );

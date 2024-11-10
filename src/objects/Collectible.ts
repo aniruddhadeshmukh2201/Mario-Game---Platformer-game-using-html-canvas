@@ -12,7 +12,7 @@ class Collectible extends GameObject {
     super(x, y, vx, vy, width, height, true, true);
   }
 
-  render(ctx : CanvasRenderingContext2D) {}
+  render(ctx : CanvasRenderingContext2D, renderX : number, renderY: number) {}
 }
 
 export default Collectible;
