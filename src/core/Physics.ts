@@ -85,6 +85,9 @@ class Physics {
       player.setY(otherObject.getTop() - player.getHeight() / 2); // Set player on top of platform
       player.setVy(0); // Stop vertical movement
       player.setOnGround(true);
+    } else if(player.getVy() < 0 && player.getTop() <= otherObject.getBottom()){
+      player.setY(otherObject.getBottom() + player.getHeight() / 2); // Set player on top of platform
+      player.setVy(0); // Stop vertical movement
     }
     // Horizontal collision (e.g., running into a wall from the side)
     else {
