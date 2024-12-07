@@ -9,16 +9,18 @@ class WorldBuilder {
 
     buildWorld(config: any): GameObject[] {
         const gameObjects: GameObject[] = [];
-        config.platforms.forEach((p: any) => {
-            gameObjects.push(this.factory.createPlatform(p.x, p.y, p.width, p.height));
-        });
-        config.enemies.forEach((e: any) => {
-            if (e.type === "mushroom") {
-                gameObjects.push(this.factory.createMushroom(e.x, e.y, e.width, e.height, e.type));
-            }
-        });
-        config.collectibles.forEach((c: any) => {
-            gameObjects.push(this.factory.createCollectible(c.x, c.y, c.width, c.height));
+        config.levels.forEach((level: any) => {
+            level.platforms.forEach((p: any) => {
+                gameObjects.push(this.factory.createPlatform(p.x, p.y, p.width, p.height));
+            });
+            level.enemies.forEach((e: any) => {
+                if (e.type === "mushroom") {
+                    gameObjects.push(this.factory.createMushroom(e.x, e.y, e.width, e.height, e.type));
+                }
+            });
+            level.collectibles.forEach((c: any) => {
+                gameObjects.push(this.factory.createCollectible(c.x, c.y, c.width, c.height));
+            });
         });
 
         return gameObjects;
