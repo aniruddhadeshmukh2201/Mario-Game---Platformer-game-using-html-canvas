@@ -12,16 +12,19 @@ class Physics {
 
   applyPhysics(gameObjects: GameObject[], canvasHeight: number, camera: Camera) {
     gameObjects.forEach((gameObject) => {
-      gameObject.setX(gameObject.getX() + gameObject.getVx());
-      gameObject.setY(gameObject.getY() + gameObject.getVy());
+      this.updatePostion(gameObject);
       this.applyGravity(gameObject, canvasHeight);
       this.applyFriction(gameObject);
     });
 
     this.enforceCameraBoundary(gameObjects, camera);
-
     this.applyCollisions(gameObjects);
     this.updateGroundStatus(gameObjects);
+  }
+
+  updatePostion(gameObject: GameObject) {
+    gameObject.setX(gameObject.getX() + gameObject.getVx());
+    gameObject.setY(gameObject.getY() + gameObject.getVy());
   }
 
   applyFriction(gameObject: GameObject) {
@@ -102,6 +105,7 @@ class Physics {
     
     // Vertical collision (e.g., player landing on top of a platform)
     if (player.getVy() >= 0 && player.getBottom() >= otherObject.getTop()) {
+      console.log('vertical collision ');
       player.setY(otherObject.getTop() - player.getHeight() / 2); // Set player on top of platform
       player.setVy(0); // Stop vertical movement
       player.setOnGround(true);

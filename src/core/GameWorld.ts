@@ -8,7 +8,7 @@ class GameWorld {
 
     async initializeWorld(config : any) {
         console.log("----config------", config);
-        this.gameObjects = this.builder.buildWorld(config);
+        this.gameObjects = this.builder.buildWorld(config, 1);
         console.log("----gameObjects------", this.gameObjects);
     }
 
