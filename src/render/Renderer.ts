@@ -9,8 +9,8 @@ type RenderObject = {
 export default class Renderer {
   private ctx: CanvasRenderingContext2D;
 
-  constructor(ctx: CanvasRenderingContext2D) {
-    this.ctx = ctx;
+  constructor(canvas : HTMLCanvasElement) {
+    this.ctx = canvas.getContext("2d")!;
   }
 
   clearCanvas() {

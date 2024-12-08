@@ -4,38 +4,27 @@ import Renderer from "../render/Renderer";
 import InputHandler from "../utils/InputHandler";
 import Physics from "./Physics";
 import Camera from "./Camera";
-import GameObject from "../objects/GameObject";
 import GameWorld from "./GameWorld";
-import WorldBuilder from "./WorldBuilder";
-import GameObjectFactory from "../objects/GameObjectFactory";
 import config from '../assets/config.json';
 
 class Game {
   canvas: HTMLCanvasElement;
-  ctx: CanvasRenderingContext2D;
-  canvasWidth: number;
-  canvasHeight: number;
-  private player: Player;
-  private gameObjectFactory: GameObjectFactory;
-  private gameWorld: GameWorld;
-  private worldBuilder: WorldBuilder;
+
   private inputHandler: InputHandler;
   private renderer: Renderer;
   private physics: Physics;
   private camera: Camera;
+  private player: Player;
+  private gameWorld: GameWorld;
+  
   
   constructor() {
     this.canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
-    this.ctx = this.canvas.getContext("2d")!;
-    this.canvasWidth = this.canvas.width;
-    this.canvasHeight = this.canvas.height;
     this.player = new Player(100, 100, 0, 0, 25, 40);
-    this.gameObjectFactory = new GameObjectFactory();
-    this.worldBuilder = new WorldBuilder(this.gameObjectFactory);
-    this.gameWorld = new GameWorld(this.worldBuilder);
+    this.gameWorld = new GameWorld();
     this.gameWorld.initializeWorld(config);
     this.inputHandler = new InputHandler();
-    this.renderer = new Renderer(this.ctx);
+    this.renderer = new Renderer(this.canvas);
     this.physics = new Physics();
     this.camera = new Camera(0, 0, 800, 400);
     console.log("Game created");
@@ -43,8 +32,8 @@ class Game {
 
   public update() {
     this.handleInput();
-    this.physics.applyPhysics([this.player, ...this.gameWorld.getObjects()], this.canvasHeight, this.camera);
-    this.camera.update(this.player, this.canvasWidth);
+    this.physics.applyPhysics([this.player, ...this.gameWorld.getObjects()], this.canvas.height, this.camera);
+    this.camera.update(this.player, this.canvas.width);
   }
 
   private handleInput() {
@@ -78,25 +67,6 @@ class Game {
     });
 
     this.renderer.drawGameObjects(visibleObjects);
-  }
-
-  private isVisible(obj: GameObject): boolean {
-    // Check if the object is within the camera view
-    let x = obj.getX();
-    let y = obj.getY();
-    let width = obj.getWidth();
-    let height = obj.getHeight();
-    let cameraX = this.camera.getX();
-    let cameraY = this.camera.getY();
-    let cameraWidth = this.camera.getWidth();
-    let cameraHeight = this.camera.getHeight();
-
-    return (
-      x < cameraX + cameraWidth &&
-      x + width > cameraX &&
-      y < cameraY + cameraHeight &&
-      y + height > cameraY
-    );
   }
 }
 
