@@ -1,0 +1,12 @@
+canvas {
+  border: 5px solid white;
+  display: block;
+  margin: 0 auto;
+  background-color: skyblue;
+  width: 100vw;
+  height: 400px;
+}
+
+body {
+  background-color: black;
+}

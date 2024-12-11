@@ -14,7 +14,7 @@ export default class Renderer {
   }
 
   clearCanvas() {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.ctx.clearRect(0, 0, this.ctx.canvas.clientWidth, this.ctx.canvas.clientHeight);
   }
 
 

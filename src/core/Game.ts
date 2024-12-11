@@ -17,6 +17,8 @@ class Game {
   
   constructor() {
     this.canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
+    this.canvas.width = this.canvas.clientWidth;  
+    this.canvas.height = this.canvas.clientHeight;
     this.gameState = new GameState(config);
     this.ctx = this.canvas.getContext("2d")!;
     this.inputHandler = new InputHandler();
