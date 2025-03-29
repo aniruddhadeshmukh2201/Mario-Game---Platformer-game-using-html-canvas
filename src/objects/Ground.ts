@@ -26,3 +26,6 @@ class Ground extends GameObject {
         );
     }
 }
+
+
+export default Ground;

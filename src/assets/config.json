@@ -5,12 +5,12 @@
       "name": "Level 1",
       "background": "background",
       "music": "music",
-      "width" : 1600,
+      "width" : 5000,
       "platforms": [
         { "type": "ground", "x": 220, "y": 180, "width": 200, "height": 30 },
         { "type": "ground", "x": 450, "y": 270, "width": 300, "height": 30 },
         { "type": "ground", "x": 600, "y": 120, "width": 300, "height": 30 },
-        { "type" : "ground", "x" : 430, "y" : 450, "width"  : 1600, "height" : 50}
+        { "type" : "ground", "x" : 430, "y" : 450, "width"  : 10000, "height" : 50}
       ],
       "enemies": [],
       "collectibles": []

@@ -2,7 +2,7 @@ import Renderer from "../render/Renderer";
 import InputHandler from "../utils/InputHandler";
 import Physics from "./Physics";
 import Camera from "./Camera";
-import config from '../assets/config.json';
+import config from "../assets/config.json";
 import GameState from "./GameState";
 
 class Game {
@@ -13,11 +13,11 @@ class Game {
   private renderer: Renderer;
   private physics: Physics;
   private camera: Camera;
-  private gameState: GameState; 
-  
+  private gameState: GameState;
+
   constructor() {
     this.canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
-    this.canvas.width = this.canvas.clientWidth;  
+    this.canvas.width = this.canvas.clientWidth;
     this.canvas.height = this.canvas.clientHeight;
     this.gameState = new GameState(config);
     this.ctx = this.canvas.getContext("2d")!;
@@ -30,22 +30,36 @@ class Game {
 
   public update() {
     this.handleInput();
-    this.physics.applyPhysics([this.gameState.getPlayer(), ...this.gameState.getGameWorld().getObjects()], this.canvas.height, this.camera);
+    this.physics.applyPhysics(
+      [
+        this.gameState.getPlayer(),
+        ...this.gameState.getGameWorld().getObjects(),
+      ],
+      this.canvas.height,
+      this.camera
+    );
     this.camera.update(this.gameState.getPlayer(), this.canvas.width);
   }
 
   private handleInput() {
     if (
       (this.inputHandler.isKeyPressed("ArrowUp") ||
-      this.inputHandler.isKeyPressed("space")) && this.gameState.getPlayer().getOnGround()
+        this.inputHandler.isKeyPressed("space")) &&
+      this.gameState.getPlayer().getOnGround()
     ) {
       this.gameState.getPlayer().jump();
     }
-    if (this.inputHandler.isKeyPressed("ArrowLeft") && this.gameState.getPlayer().getOnGround()) {
+    if (
+      this.inputHandler.isKeyPressed("ArrowLeft") &&
+      this.gameState.getPlayer().getOnGround()
+    ) {
       console.log("----pressed left----");
       this.gameState.getPlayer().moveLeft(this.camera);
     }
-    if (this.inputHandler.isKeyPressed("ArrowRight") && this.gameState.getPlayer().getOnGround()) {
+    if (
+      this.inputHandler.isKeyPressed("ArrowRight") &&
+      this.gameState.getPlayer().getOnGround()
+    ) {
       this.gameState.getPlayer().moveRight(this.camera);
     }
     // Reset keys if needed
@@ -54,16 +68,29 @@ class Game {
 
   render() {
     this.renderer.clearCanvas();
-    
+
     // Draw objects relative to the camera’s position
-    const visibleObjects = [this.gameState.getPlayer(), ...this.gameState.getGameWorld().getObjects()].map(obj => {
-      return {
-        gameObject : obj,
-        renderX: obj.getX() - this.camera.getX(),
-        renderY: obj.getY() - this.camera.getY()
-      };
-    });
-    console.log("-----checking no. of objects : ", visibleObjects.length, this.gameState.getGameWorld().getObjects().length  );
+    const visibleObjects = [
+      this.gameState.getPlayer(),
+      ...this.gameState.getGameWorld().getObjects(),
+    ]
+      .filter((obj) => {
+        let objStartX = obj.getX() - obj.getWidth() / 2;
+        let objEndX = obj.getX() + obj.getWidth() / 2;
+        // TODO :  maybe we need to think of a better way to check if the object is visible
+        if ( objEndX > this.camera.getX() && objStartX < this.camera.getX() + this.canvas.width) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .map((obj) => {
+        return {
+          gameObject: obj,
+          renderX: obj.getX() - this.camera.getX(),
+          renderY: obj.getY() - this.camera.getY(),
+        };
+      });
     this.renderer.drawGameObjects(visibleObjects);
   }
 }
