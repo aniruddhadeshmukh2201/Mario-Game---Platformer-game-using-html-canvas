@@ -54,7 +54,7 @@ class Game {
 
   render() {
     this.renderer.clearCanvas();
-
+    
     // Draw objects relative to the camera’s position
     const visibleObjects = [this.gameState.getPlayer(), ...this.gameState.getGameWorld().getObjects()].map(obj => {
       return {
@@ -63,7 +63,7 @@ class Game {
         renderY: obj.getY() - this.camera.getY()
       };
     });
-
+    console.log("-----checking no. of objects : ", visibleObjects.length, this.gameState.getGameWorld().getObjects().length  );
     this.renderer.drawGameObjects(visibleObjects);
   }
 }
