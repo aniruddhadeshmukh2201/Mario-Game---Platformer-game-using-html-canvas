@@ -18,7 +18,7 @@ class WorldBuilder {
                 });
                 level.enemies.forEach((e: any) => {
                     if (e.type === "mushroom") {
-                        gameObjects.push(this.factory.createMushroom(e.x, e.y, e.width, e.height, e.type));
+                        gameObjects.push(this.factory.createMushroom(e.x, e.y, e.width, e.height, e.vx, e.vy, e.type));
                     }
                 });
                 level.collectibles.forEach((c: any) => {
