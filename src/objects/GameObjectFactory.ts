@@ -11,8 +11,8 @@ class GameObjectFactory {
     }
 
     // Factory method for creating a Mushroom
-    createMushroom(x: number, y: number, width : number, height : number, type : string ): Mushroom {
-        const mushroom = new Mushroom(x, y, 0, 0, width, height, type); // Passing all 7 required arguments
+    createMushroom(x: number, y: number, width : number, height : number, vx: number, vy: number,  type : string ): Mushroom {
+        const mushroom = new Mushroom(x, y, vx, vy, width, height, type); // Passing all 7 required arguments
         return mushroom;
     }
 
