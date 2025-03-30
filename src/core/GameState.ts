@@ -83,6 +83,7 @@ class GameState {
             this.currentLevel++;
             this.status = GameStatus.ACTIVE;
             this.player = new Player(100, 100, 0, 0, 25, 40, this);
+            this.winPosition = this.builder.getWinPosition(this.config, this.currentLevel);
             this.gameObjects = this.builder.buildWorld(this.config, this.currentLevel);
         }
     }
