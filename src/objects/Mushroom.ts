@@ -2,6 +2,8 @@ import GameObject from "./GameObject";
 
 class Mushroom extends GameObject {
   private type: any;
+  color: string = "red";
+  private OnGround: boolean = false;
   constructor(
     x: number,
     y: number,
@@ -15,6 +17,14 @@ class Mushroom extends GameObject {
     this.type = type;
   }
 
+  setOnGround(onGround: boolean) {
+    this.OnGround = onGround;
+  }
+
+  getOnGround() {
+    return this.OnGround;
+  }
+
   getType() {
     return this.type;
   }
@@ -26,6 +36,13 @@ class Mushroom extends GameObject {
 
   render(ctx : CanvasRenderingContext2D, renderX: number, renderY: number) {
     // Render mushroom based on its type
+    ctx.fillStyle = this.color;
+    ctx.fillRect(
+      renderX - this.getWidth() / 2,
+      renderY - this.getHeight() / 2,
+      this.getWidth(),
+      this.getHeight()
+    );
   }
 }
 
