@@ -12,7 +12,7 @@ class WorldBuilder {
     buildWorld(config: any, levelId : number): GameObject[] {
         const gameObjects: GameObject[] = [];
         config.levels.forEach((level: any) => {
-            if(level.id === levelId) {
+            if(level.id == levelId) {
                 level.platforms.forEach((p: any) => {
                     gameObjects.push(this.factory.createPlatform(p.x, p.y, p.width, p.height));
                 });
@@ -28,6 +28,16 @@ class WorldBuilder {
         });
 
         return gameObjects;
+    }
+
+    getWinPosition(config: any, levelId: number): number {
+        let winPosition = 0;
+        config.levels.forEach((level: any) => {
+            if(level.id === levelId) {
+                winPosition = level.winPosition;
+            }
+        });
+        return winPosition;
     }
 }
 

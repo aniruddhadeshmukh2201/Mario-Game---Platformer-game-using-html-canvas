@@ -1,6 +1,7 @@
+import PhysicsBody from "../physics/PhysicsBody";
 import GameObject from "./GameObject";
 
-class Platform extends GameObject {
+class Platform extends GameObject implements PhysicsBody {
   color: string = "brown";
   constructor(
     x: number,
@@ -11,6 +12,14 @@ class Platform extends GameObject {
     height: number
   ) {
     super(x, y, vx, vy, width, height, true, true);
+  }
+  applyGravity(): void {
+
+  }
+  applyFriction(): void {
+  }
+  resolveCollision(other: GameObject): void {
+  
   }
 
   render(ctx : CanvasRenderingContext2D, renderX: number, renderY: number) {

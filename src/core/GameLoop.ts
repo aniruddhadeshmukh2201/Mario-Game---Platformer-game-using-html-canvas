@@ -14,14 +14,15 @@ class GameLoop {
   }
 
   private loop(timestamp: number) {
-    const deltaTime = timestamp - this.lastTimestamp;
-    this.lastTimestamp = timestamp;
+    if (!this.game.isPaused()) {
+      const deltaTime = timestamp - this.lastTimestamp;
+      this.lastTimestamp = timestamp;
+      this.game.update();
+    }
 
-    this.game.update();
-    this.game.render();
+    this.game.render(); // Always render so overlays show
 
-    requestAnimationFrame(this.loop.bind(this));
-
+    requestAnimationFrame(this.loop.bind(this)); // ✅ Ensure loop continues
   }
 }
 
