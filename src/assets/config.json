@@ -3,17 +3,31 @@
     {
       "id": 1,
       "name": "Level 1",
-      "background": "background",
-      "music": "music",
-      "width" : 5000,
+      "background": "forest",
+      "music": "adventure_theme",
+      "width": 5000,
       "platforms": [
         { "type": "ground", "x": 220, "y": 180, "width": 200, "height": 30 },
         { "type": "ground", "x": 450, "y": 270, "width": 300, "height": 30 },
         { "type": "ground", "x": 600, "y": 120, "width": 300, "height": 30 },
-        { "type" : "ground", "x" : 430, "y" : 450, "width"  : 10000, "height" : 50}
+        { "type": "ground", "x": 430, "y": 450, "width": 4000, "height": 50 },
+        { "type": "moving", "x": 900, "y": 220, "width": 200, "height": 30, "range": 150, "speed": 2 },
+        { "type": "ground", "x": 1300, "y": 300, "width": 250, "height": 30 },
+        { "type": "moving", "x": 1600, "y": 200, "width": 200, "height": 30, "range": 120, "speed": 2 },
+        { "type": "hazard", "x": 1900, "y": 450, "width": 200, "height": 30 }
       ],
-      "enemies": [],
-      "collectibles": []
+      "enemies": [
+        { "type": "mushroom", "x": 500, "y": 0, "width": 30, "height": 30,  "range": 300, "vx": -3, "vy" : 0 },
+        { "type": "mushroom", "x": 1200, "y": 0,"width": 30, "height": 30, "range": 200, "vx": -3,  "vy" : 0},
+        { "type": "mushroom", "x": 1800, "y": 0, "width": 30, "height": 30, "range": 250, "vx": -3, "vy" : 0 }
+      ],
+      "collectibles": [
+        { "type": "coin", "x": 250, "y": 150 },
+        { "type": "coin", "x": 480, "y": 240 },
+        { "type": "coin", "x": 630, "y": 90 },
+        { "type": "gem", "x": 1500, "y": 250 },
+        { "type": "power-up", "x": 2000, "y": 400 }
+      ]
     },
     {
       "id": 2,
