@@ -24,8 +24,8 @@ class Game {
     this.inputHandler = new InputHandler();
     this.renderer = new Renderer(this.canvas);
     this.physics = new Physics();
-    this.camera = new Camera(0, 0, 800, 400);
-    console.log("Game created");
+    this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
+    console.log("Game created", this.canvas.width, this.canvas.height);
   }
 
   public update() {
