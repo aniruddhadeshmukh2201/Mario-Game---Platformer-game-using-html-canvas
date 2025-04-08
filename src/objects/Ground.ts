@@ -17,6 +17,9 @@ class Ground extends GameObject {
     }
     
     render(ctx : CanvasRenderingContext2D, renderX: number, renderY: number) {
+        if(!this.isVisible()) {
+            return ;
+        }
         ctx.fillStyle = this.color;
         ctx.fillRect(
         this.getX() - this.getWidth() / 2,

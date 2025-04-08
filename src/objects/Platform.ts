@@ -11,7 +11,7 @@ class Platform extends GameObject implements PhysicsBody {
     width: number,
     height: number
   ) {
-    super(x, y, vx, vy, width, height, true, true);
+    super(x, y, vx, vy, width, height, false, true);
   }
   applyGravity(): void {
 
@@ -23,6 +23,9 @@ class Platform extends GameObject implements PhysicsBody {
   }
 
   render(ctx : CanvasRenderingContext2D, renderX: number, renderY: number) {
+    if(!this.isVisible()) {
+      return ;
+    }
     ctx.fillStyle = this.color;
     ctx.fillRect(
       renderX - this.getWidth() / 2,

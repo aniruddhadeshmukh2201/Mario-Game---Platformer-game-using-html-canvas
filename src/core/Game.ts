@@ -13,6 +13,7 @@ class Game {
   private inputHandler: InputHandler;
   private renderer: Renderer;
   private physics: Physics;
+  // Todo : maybe we can move this to the renderer
   private camera: Camera;
   private gameState: GameState;
 

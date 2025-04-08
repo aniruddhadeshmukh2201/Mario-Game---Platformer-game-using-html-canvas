@@ -7,6 +7,7 @@ class GameObject {
   private height: number;
   private passable: boolean;
   private floating: boolean;
+  private visible: boolean = true;
   constructor(
     x: number,
     y: number,
@@ -25,6 +26,14 @@ class GameObject {
     this.height = hieght;
     this.passable = passable;
     this.floating = floating;
+  }
+
+  isVisible() {
+    return this.visible;
+  }
+
+  changeVisibility(visible: boolean) {
+    this.visible = visible;
   }
 
   getLeft() {

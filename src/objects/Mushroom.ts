@@ -14,7 +14,7 @@ class Mushroom extends GameObject implements PhysicsBody {
     height: number,
     type: string
   ) {
-    super(x, y, vx, vy, width, height, true, false);
+    super(x, y, vx, vy, width, height, false, false);
     this.type = type;
   }
   applyGravity(): void {
@@ -32,6 +32,10 @@ class Mushroom extends GameObject implements PhysicsBody {
   resolveCollision(other: GameObject): void {
     const previousY = this.getY() - this.getVy();
     const previousX = this.getX() - this.getVx();
+
+    if(this.getPassable() || other.getPassable() ) {
+      return;
+    }
 
     // **Vertical Collision (ground or ceiling)**
     if (this.getBottom() > other.getTop() && previousY + this.getHeight() / 2 <= other.getTop()) {
@@ -77,6 +81,9 @@ class Mushroom extends GameObject implements PhysicsBody {
 
   render(ctx : CanvasRenderingContext2D, renderX: number, renderY: number) {
     // Render mushroom based on its type
+    if(!this.isVisible()) {
+      return ;
+    }
     ctx.fillStyle = this.color;
     ctx.fillRect(
       renderX - this.getWidth() / 2,

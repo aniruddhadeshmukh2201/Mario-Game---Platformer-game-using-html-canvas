@@ -24,12 +24,19 @@ class Player extends GameObject implements PhysicsBody {
     // Get previous position before resolving the collision
     const previousY = this.getY() - this.getVy();
     const previousX = this.getX() - this.getVx();
-
+    if(other.getPassable() ) {
+      return;
+    }
     // Vertical collision check
     if (
       this.getBottom() > other.getTop() && // Player's bottom is below the platform's top
       previousY + this.getHeight() / 2 <= other.getTop() // Was the player above the platform before?
     ) {
+      if (other instanceof Mushroom) {
+        console.log("💀 Player jumped on a Mushroom");
+        other.setPassable(true);
+        other.changeVisibility(false);
+      }
       // Land on top of the platform
       this.setY(other.getTop() - this.getHeight() / 2);
       this.setVy(0); // Stop vertical movement
@@ -109,6 +116,9 @@ class Player extends GameObject implements PhysicsBody {
   render(ctx: CanvasRenderingContext2D, renderX: number, renderY: number) {
     // Example logic using a sprite or simple shape
     // console.log("player position::::", this.getX(), this.getY() );
+    if(!this.isVisible()) {
+      return ;
+    }
     ctx.fillStyle = this.color;
     ctx.fillRect(
       renderX - this.getWidth() / 2,

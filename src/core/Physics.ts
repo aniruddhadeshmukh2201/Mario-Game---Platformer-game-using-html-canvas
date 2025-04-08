@@ -13,8 +13,8 @@ class Physics {
     });
 
     this.applyCollisions(bodies);
-  }
-
+  }  
+  // TODO : need improvements here.., cant just do two loops
   applyCollisions(bodies: PhysicsBody[]) {
     bodies.forEach((body1: PhysicsBody) => {
       bodies.forEach((body2: PhysicsBody) => {
