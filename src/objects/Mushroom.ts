@@ -18,15 +18,11 @@ class Mushroom extends GameObject implements PhysicsBody {
     this.type = type;
   }
   applyGravity(): void {
-    if (!this.OnGround) {
-      this.setVy(this.getVy() + 0.1); // Simulating gravity
-    }
+    this.setVy(this.getVy() + 0.1); // Always apply gravity, like player
   }
 
   applyFriction(): void {
-    // if (this.OnGround) {
-    //   this.setVx(this.getVx() * 0.99); // Reduce speed gradually
-    // }
+    // Mushrooms are not affected by friction
   }
 
   resolveCollision(other: GameObject): void {

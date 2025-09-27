@@ -9,6 +9,7 @@ import PhysicsBody from "../physics/PhysicsBody";
 class Game {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
+  private defaultCanvasHeight: number = 400;
 
   private inputHandler: InputHandler;
   private renderer: Renderer;
@@ -19,8 +20,12 @@ class Game {
 
   constructor() {
     this.canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
-    this.canvas.width = this.canvas.clientWidth;
-    this.canvas.height = this.canvas.clientHeight;
+    // If config.canvasHeight exists, use it
+    if ((config as any).canvasHeight) {
+      this.defaultCanvasHeight = (config as any).canvasHeight;
+    }
+    this.resizeCanvas();
+    window.addEventListener("resize", this.resizeCanvas.bind(this));
     this.gameState = new GameState(config);
     this.ctx = this.canvas.getContext("2d")!;
     this.inputHandler = new InputHandler();
@@ -28,6 +33,14 @@ class Game {
     this.physics = new Physics();
     this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
     console.log("Game created", this.canvas.width, this.canvas.height);
+  }
+
+  private resizeCanvas() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = this.defaultCanvasHeight;
+    if (this.camera) {
+      this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
+    }
   }
 
   public update() {
@@ -38,6 +51,12 @@ class Game {
       ) as PhysicsBody[]
     );
     this.camera.update(this.gameState.getPlayer(), this.canvas.width);
+
+    // Check if player fell below the ground (out of screen)
+    const player = this.gameState.getPlayer();
+    if (player.getY() - player.getHeight() / 2 > this.canvas.height) {
+      this.gameState.setStatus(GameStatus.LOST);
+    }
   }
 
   private handleInput() {
