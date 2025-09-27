@@ -2,7 +2,7 @@ class AudioManager {
   private backgroundMusic: HTMLAudioElement;
 
   constructor() {
-    this.backgroundMusic = new Audio("public/assets/background.mp3");
+    this.backgroundMusic = new Audio("public/assets/SuperMarioBros.mp3");
     this.backgroundMusic.loop = true;
   }
 
