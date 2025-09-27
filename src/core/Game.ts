@@ -5,6 +5,7 @@ import Camera from "./Camera";
 import config from "../assets/config.json";
 import GameState, { GameStatus } from "./GameState";
 import PhysicsBody from "../physics/PhysicsBody";
+import AudioManager from "../core/AudioManager";
 
 class Game {
   canvas: HTMLCanvasElement;
@@ -17,6 +18,8 @@ class Game {
   // Todo : maybe we can move this to the renderer
   private camera: Camera;
   private gameState: GameState;
+  private audioManager: AudioManager;
+  private hasStarted: boolean;
 
   constructor() {
     this.canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
@@ -32,6 +35,10 @@ class Game {
     this.renderer = new Renderer(this.canvas, this.handleNextLevel.bind(this));
     this.physics = new Physics();
     this.camera = new Camera(0, 0, this.canvas.width, this.canvas.height);
+    this.audioManager = new AudioManager();
+    this.hasStarted = false;
+    // Show start screen before starting the game
+    this.showStartScreen();
     console.log("Game created", this.canvas.width, this.canvas.height);
   }
 
@@ -44,6 +51,8 @@ class Game {
   }
 
   public update() {
+    if (!this.hasStarted) return;
+
     this.handleInput();
     this.physics.applyPhysics(
       [this.gameState.getPlayer(), ...this.gameState.getObjects()].filter(
@@ -82,6 +91,8 @@ class Game {
   }
 
   render() {
+    if (!this.hasStarted) return;
+
     this.renderer.clearCanvas();
 
     // Draw objects relative to the camera’s position
@@ -190,6 +201,21 @@ class Game {
     };
 
     document.body.appendChild(restartButton);
+  }
+
+  private showStartScreen() {
+    this.renderer.renderStartOverlay();
+    (window as any).onStartGame = () => {
+      this.startGame();
+    };
+  }
+
+  private startGame() {
+    this.renderer.clearCanvas();
+    delete (window as any).onStartGame;
+    this.hasStarted = true;
+    this.audioManager.playBackgroundMusic();
+    // Game loop and first level logic continues...
   }
 }
 

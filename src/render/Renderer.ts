@@ -157,6 +157,61 @@ export default class Renderer {
       this.onNextLevel(); // Callback to GameState
     }
   };
-  
-  
+
+  renderStartOverlay() {
+    const ctx = this.ctx;
+    const { width, height } = ctx.canvas;
+
+    // Dark transparent overlay
+    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    ctx.fillRect(0, 0, width, height);
+
+    // Title
+    ctx.fillStyle = "white";
+    ctx.font = "bold 40px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("Mario Platformer", width / 2, height / 2 - 80);
+
+    // Subtitle
+    ctx.font = "20px Arial";
+    ctx.fillText("Press Play to Start", width / 2, height / 2 - 30);
+
+    // Play Button
+    ctx.fillStyle = "#e74c3c";
+    const buttonWidth = 180;
+    const buttonHeight = 60;
+    const buttonX = width / 2 - buttonWidth / 2;
+    const buttonY = height / 2 + 10;
+    ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+    // Button Text
+    ctx.fillStyle = "white";
+    ctx.font = "bold 28px Arial";
+    ctx.fillText("Play", width / 2, buttonY + 38);
+
+    // Add click event listener for Play button
+    ctx.canvas.removeEventListener("click", this.handleStartClick);
+    ctx.canvas.addEventListener("click", this.handleStartClick);
+  }
+
+  handleStartClick = (event: MouseEvent) => {
+    const buttonWidth = 180;
+    const buttonHeight = 60;
+    const buttonX = this.ctx.canvas.width / 2 - buttonWidth / 2;
+    const buttonY = this.ctx.canvas.height / 2 + 10;
+    const rect = this.ctx.canvas.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+    const clickY = event.clientY - rect.top;
+    if (
+      clickX >= buttonX &&
+      clickX <= buttonX + buttonWidth &&
+      clickY >= buttonY &&
+      clickY <= buttonY + buttonHeight
+    ) {
+      this.ctx.canvas.removeEventListener("click", this.handleStartClick);
+      if (typeof (window as any).onStartGame === "function") {
+        (window as any).onStartGame();
+      }
+    }
+  }
 }
